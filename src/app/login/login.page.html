@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-input placeholder="Username" [(ngModel)]="login.Username"></ion-input>
+    <ion-input placeholder="Password" type="password" [(ngModel)]="login.Password"></ion-input>
+    <ion-button expand="block" (click)= "Login()">Login</ion-button>
+    <p>{{error}}</p>
+</ion-content>
