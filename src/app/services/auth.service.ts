@@ -23,9 +23,7 @@ export class AuthService {
   };
   constructor(private http: HttpClient) { }
 
-  getPlayers() {
-    return this.http.get<any[]>(this.server + this.path);
-  }
+
   Login(user) {
     this.path = 'api/Auth/Login';
     return this.http.post<Session>(this.server + this.path, user, this.httpOptions);

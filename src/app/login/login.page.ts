@@ -35,7 +35,7 @@ export class LoginPage implements OnInit {
     this.returnType.subscribe(data => {
       if (data.Error === null) {
         this.router.navigateByUrl('/tabs/tabs/tab1');
-        this.store.set('session', JSON.stringify(data));
+        this.store.set('session', data);
       } else {
         this.error = data.Error;
       }
