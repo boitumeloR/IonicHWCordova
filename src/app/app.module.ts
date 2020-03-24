@@ -10,10 +10,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
+import { AddPlayerModalPage } from './modals/add-player-modal/add-player-modal.page';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [
+    AppComponent,
+    AddPlayerModalPage
+  ],
+  entryComponents: [
+    AddPlayerModalPage
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
