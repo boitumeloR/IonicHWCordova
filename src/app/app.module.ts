@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { AddPlayerModalPage } from './modals/add-player-modal/add-player-modal.page';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AddPlayerModalPage } from './modals/add-player-modal/add-player-modal.p
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    FormsModule
   ],
   providers: [
     StatusBar,

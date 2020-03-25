@@ -41,9 +41,23 @@ export class Tab1Page implements OnInit {
     const modal = await this.modalController.create({
       component: AddPlayerModalPage
     });
+    modal.onDidDismiss().then(() => {
+      this.reActivate();
+    })
     return await modal.present();
   }
 
+  reActivate() {
+    this.store.get('session').then(sess => {
+      console.log(sess);
+      this.players = this.serv.getPlayers(sess);
+      this.players.subscribe(data => {
+        this.tableData = data.Players;
+        console.log(this.tableData);
+        this.store.set('session', data.Session);
+       });
+    });
+  }
 
   UpdatePlayer(item) {
     this.router.navigateByUrl('tabs/tabs/tab2');

@@ -22,6 +22,10 @@ export interface SecurePlayers {
   Session: Session;
   Players: Players[];
 }
+export interface SecurePlayer {
+  Session: Session;
+  Player: Players;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -41,5 +45,18 @@ export class LeagueService {
     this.path = 'api/League/GetPlayers';
     console.log(sess);
     return this.http.post<SecurePlayers>(this.server + this.path, sess, this.httpOptions );
+  }
+
+  getTeams(sess) {
+    this.path = 'api/League/GetSecureTeams';
+    return this.http.post<SecurePlayers>(this.server + this.path, sess, this.httpOptions);
+  }
+  AddPlayer(player, session) {
+    this.path = 'api/League/AddPlayer';
+    const inPlayer: SecurePlayer = {
+      Player: player,
+      Session: session
+    };
+    return this.http.post<Session>(this.server + this.path, inPlayer, this.httpOptions);
   }
 }
