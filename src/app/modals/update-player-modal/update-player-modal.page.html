@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Player</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-item>
+    <ion-label position="fixed"> Name </ion-label>
+    <ion-input [(ngModel)]="inPlayer.PlayerName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed"> Surname</ion-label>
+    <ion-input [(ngModel)]="inPlayer.PlayerSurname"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed"> Age </ion-label>
+    <ion-input  type="number" [(ngModel)]="inPlayer.PlayerAge"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed">Average</ion-label>
+    <ion-input type="number" step="0.01" [(ngModel)]="inPlayer.PlayerAverage"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Team</ion-label>
+    <ion-select placeholder="Select One" [(ngModel)]="inPlayer.TeamID">
+      <ion-select-option *ngFor="let team of teams" value="{{team.TeamID}}">{{team.TeamName}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-button expand="block" (click)="UpdatePlayer()">
+    Update Player
+  </ion-button>
+</ion-content>

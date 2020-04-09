@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Teams
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,30 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+      <ion-title size="large">Teams</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  
+  <!-- List of Sliding Items -->
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of tableData">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{item.TeamName}}</h2>
+          <h3>Average: {{item.TeamAverage}}</h3>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="UpdateModal(item)">Update</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+    <ion-fab-button (click) ="AddModal()"> 
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

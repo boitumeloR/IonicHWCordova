@@ -12,14 +12,23 @@ import {HttpClientModule} from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { AddPlayerModalPage } from './modals/add-player-modal/add-player-modal.page';
 import {FormsModule} from '@angular/forms';
+import { UpdatePlayerModalPage } from './modals/update-player-modal/update-player-modal.page';
+import { AddTeamModalPage } from './modals/add-team-modal/add-team-modal.page';
+import { UpdateTeamModalPage } from './modals/update-team-modal/update-team-modal.page';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddPlayerModalPage
+    AddPlayerModalPage,
+    UpdatePlayerModalPage,
+    AddTeamModalPage,
+    UpdateTeamModalPage
   ],
   entryComponents: [
-    AddPlayerModalPage
+    AddPlayerModalPage,
+    UpdatePlayerModalPage,
+    AddTeamModalPage,
+    UpdateTeamModalPage
   ],
   imports: [
     BrowserModule,

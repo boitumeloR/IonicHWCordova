@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Team</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-item>
+    <ion-label position="fixed"> Name </ion-label>
+    <ion-input [(ngModel)]="inTeam.TeamName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed">Average</ion-label>
+    <ion-input type="number" step="0.01" [(ngModel)]="inTeam.TeamAverage"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>League</ion-label>
+    <ion-select placeholder="Select One" [(ngModel)]="inTeam.LeagueID">
+      <ion-select-option *ngFor="let league of leagues" value="{{league.LeagueID}}">{{league.LeagueName}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-button expand="block" (click)="UpdateTeam()">
+    Update Team
+  </ion-button>
+</ion-content>

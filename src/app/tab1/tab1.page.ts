@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import {Storage} from '@ionic/storage';
 import { ModalController } from '@ionic/angular';
 import {AddPlayerModalPage} from '../modals/add-player-modal/add-player-modal.page';
+import {UpdatePlayerModalPage} from '../modals/update-player-modal/update-player-modal.page';
 
 @Component({
   selector: 'app-tab1',
@@ -31,7 +32,7 @@ export class Tab1Page implements OnInit {
 
   async UpdateModal(player) {
     const modal = await this.modalController.create({
-      component: AddPlayerModalPage,
+      component: UpdatePlayerModalPage,
       componentProps: player
     });
     return await modal.present();
@@ -43,7 +44,7 @@ export class Tab1Page implements OnInit {
     });
     modal.onDidDismiss().then(() => {
       this.reActivate();
-    })
+    });
     return await modal.present();
   }
 
@@ -61,5 +62,14 @@ export class Tab1Page implements OnInit {
 
   UpdatePlayer(item) {
     this.router.navigateByUrl('tabs/tabs/tab2');
+  }
+
+  DeletePlayer(player) {
+    this.store.get('session').then(sess => {
+      this.serv.DeletePlayer(player, sess).subscribe(data => {
+        this.store.set('session', data);
+        this.reActivate();
+      });
+    });
   }
 }

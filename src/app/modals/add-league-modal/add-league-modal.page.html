@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add League</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-item>
+    <ion-label position="fixed"> Name </ion-label>
+    <ion-input [(ngModel)]="inLeague.LeagueName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed">Level</ion-label>
+    <ion-input type="number" [(ngModel)]="inLeague.LeagueLevel"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" (click)="AddLeague()">
+    Add League  
+  </ion-button>
+</ion-content>
