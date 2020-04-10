@@ -14,16 +14,17 @@ import { UpdateLeagueModalPage } from '../modals/update-league-modal/update-leag
 })
 export class Tab3Page implements OnInit {
 
-  leagues: Observable<SecureLeagues>;
-  tableData: League[];
   constructor(private router: Router, private store: Storage, private serv: LeagueService, private modalController: ModalController) {}
 
-  ngOnInit(): void {
+  leagues: Observable<SecureLeagues>;
+  tableData: League[];
+
+  ngOnInit() {
     this.store.get('session').then(sess => {
       console.log(sess);
       this.leagues = this.serv.GetLeagues(sess);
       this.leagues.subscribe(data => {
-        this.tableData = data.League;
+        this.tableData = data.Leagues;
         console.log(this.tableData);
         this.store.set('session', data.Session);
        });
@@ -53,7 +54,7 @@ export class Tab3Page implements OnInit {
       console.log(sess);
       this.leagues = this.serv.GetLeagues(sess);
       this.leagues.subscribe(data => {
-        this.tableData = data.League;
+        this.tableData = data.Leagues;
         console.log(this.tableData);
         this.store.set('session', data.Session);
        });

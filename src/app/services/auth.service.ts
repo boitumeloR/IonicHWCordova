@@ -28,4 +28,13 @@ export class AuthService {
     this.path = 'api/Auth/Login';
     return this.http.post<Session>(this.server + this.path, user, this.httpOptions);
   }
+
+  Register(user) {
+    this.path = 'api/Auth/RegisterUser';
+    return this.http.post<Session>(this.server + this.path, user, this.httpOptions);
+  }
+
+  UpdateUser(user) {
+
+  }
 }

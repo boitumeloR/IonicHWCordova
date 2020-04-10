@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-input placeholder="Username" [(ngModel)]="login.Username"></ion-input>
+    <ion-input placeholder="Password" type="password" [(ngModel)]="login.Password"></ion-input>
+    <ion-item>
+      <ion-label>User Type</ion-label>
+      <ion-select placeholder="Select One" [(ngModel)]="login.UserTypeID">
+        <ion-select-option *ngFor="let type of UserTypes" value="{{type.UserTypeID}}">{{type.UserTypeDescription}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button expand="block" (click)= "Register()">Register</ion-button>
+    <p>{{error}}</p>
+</ion-content>

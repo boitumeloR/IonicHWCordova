@@ -35,6 +35,10 @@ export class Tab2Page implements OnInit {
       component: UpdateTeamModalPage,
       componentProps: team
     });
+
+    modal.onDidDismiss().then(() => {
+      this.reActivate();
+    });
     return await modal.present();
   }
 

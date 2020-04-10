@@ -28,7 +28,7 @@ export class AddTeamModalPage implements OnInit {
     this.store.get('session').then(resp => {
       this.leagueResponse = this.serv.GetLeagues(resp);
       this.leagueResponse.subscribe(data => {
-        this.leagues = data.League;
+        this.leagues = data.Leagues;
         this.store.set('session', data.Session);
       });
     });

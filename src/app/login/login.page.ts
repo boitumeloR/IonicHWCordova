@@ -3,6 +3,8 @@ import { AuthService, Session } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Storage } from '@ionic/storage';
+import { ModalController, ToastController } from '@ionic/angular';
+import { RegisterModalPage } from '../modals/register-modal/register-modal.page';
 
 export interface Login {
   Username: string;
@@ -24,7 +26,8 @@ export class LoginPage implements OnInit {
   };
   returnType: Observable<Session>;
   error: string;
-  constructor(private serv: AuthService, private router: Router, private store: Storage) { }
+  constructor(private serv: AuthService, private router: Router, private store: Storage,
+              private modalCtrl: ModalController, private toastCtrl: ToastController) { }
 
   ngOnInit() {
   }
@@ -38,7 +41,25 @@ export class LoginPage implements OnInit {
         this.store.set('session', data);
       } else {
         this.error = data.Error;
+        this.presentToast();
       }
     });
+  }
+
+  async Register() {
+    const modal = this.modalCtrl.create({
+      component: RegisterModalPage
+    });
+
+    return (await modal).present();
+  }
+
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: this.error,
+      duration: 2000,
+      color: 'warning'
+    });
+    toast.present();
   }
 }

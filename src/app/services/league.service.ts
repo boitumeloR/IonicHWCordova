@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Storage} from '@ionic/storage';
 import { async } from '@angular/core/testing';
+import { SecureClientSessionOptions } from 'http2';
 
 
 export interface Session {
@@ -56,9 +57,25 @@ export interface SecureLeague {
 }
 
 export interface SecureLeagues {
-  League: League[];
+  Leagues: League[];
   Session: Session;
 }
+
+export interface UserType {
+  UserTypeID: number;
+  UserTypeDescription: string;
+}
+
+export interface SecureUserTypes {
+  UserTypes: UserType[];
+  Session: Session;
+}
+
+export interface SecureUserType {
+  UserType: UserType;
+  Session: Session;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -139,7 +156,7 @@ export class LeagueService {
 
   GetLeagues(sess) {
     this.path = 'api/League/GetSecureLeague';
-    return this.http.post<SecureLeagues>(this.server + this.path, sess, this.httpOptions );
+    return this.http.post<SecureLeagues>(this.server + this.path, sess, this.httpOptions);
   }
 
   AddLeague(league, session) {
@@ -160,4 +177,31 @@ export class LeagueService {
     return this.http.post<Session>(this.server + this.path, inLeague, this.httpOptions);
   }
 
+  // UserTypes
+
+  GetUserType(sess) {
+    this.path = 'api/League/GetUserTypes';
+    return this.http.post<SecureUserTypes>(this.server + this.path, sess, this.httpOptions);
+  }
+
+  AddUserType(usertype, session) {
+    this.path = 'api/League/AddUserType';
+    const inType: SecureUserType = {
+      UserType: usertype,
+      Session: session
+    };
+
+    return this.http.post<Session>(this.server + this.path, inType , this.httpOptions);
+  }
+
+  UpdateUserType(usertype, session) {
+    this.path = 'api/League/UpdateUserType';
+
+    const inType: SecureUserType = {
+      UserType: usertype,
+      Session: session
+    };
+
+    return this.http.post<Session>(this.server + this.path, inType , this.httpOptions);
+  }
 }
