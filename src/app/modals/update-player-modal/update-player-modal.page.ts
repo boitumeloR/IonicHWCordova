@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LeagueService, SecurePlayer, Players } from 'src/app/services/league.service';
 import { Observable } from 'rxjs';
-import { NavParams, ModalController } from '@ionic/angular';
+import { NavParams, ModalController, ToastController } from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 
 @Component({
@@ -24,7 +24,7 @@ export class UpdatePlayerModalPage implements OnInit {
     TeamID: 0
   };
   constructor(private store: Storage, private serv: LeagueService, private navParams: NavParams,
-              private modalCtrl: ModalController) { }
+              private modalCtrl: ModalController, private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.store.get('session').then(resp => {
@@ -49,8 +49,10 @@ export class UpdatePlayerModalPage implements OnInit {
       this.serv.UpdatePlayer(this.inPlayer, resp).subscribe(data => {
         if (data.Error === null) {
           this.store.set('session', data);
-          this.modalCtrl.dismiss({
-            dismissed: true
+          this.presentToast().then(() => {
+            this.modalCtrl.dismiss({
+              dismissed: true
+            });
           });
         }
       });
@@ -61,5 +63,13 @@ export class UpdatePlayerModalPage implements OnInit {
     this.modalCtrl.dismiss({
       dismissed: true
     });
+  }
+
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Your changes have been saved.',
+      duration: 2000
+    });
+    toast.present();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import { LeagueService, Players, SecurePlayers, SecurePlayer } from 'src/app/services/league.service';
 import { Observable } from 'rxjs';
@@ -25,7 +25,8 @@ export class AddPlayerModalPage implements OnInit {
     PlayerAverage: null,
     TeamID: 0
   };
-  constructor(private modalCtrl: ModalController, private store: Storage, private serv: LeagueService, private router: Router) { }
+  constructor(private modalCtrl: ModalController, private store: Storage, private serv: LeagueService,
+              private router: Router, private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.store.get('session').then(resp => {
@@ -42,8 +43,10 @@ export class AddPlayerModalPage implements OnInit {
       this.serv.AddPlayer(this.inPlayer, resp).subscribe(data => {
         if (data.Error === null) {
           this.store.set('session', data);
-          this.modalCtrl.dismiss({
-            dismissed: true
+          this.presentToast().then(() => {
+            this.modalCtrl.dismiss({
+              dismissed: true
+            });
           });
         }
       });
@@ -56,4 +59,11 @@ export class AddPlayerModalPage implements OnInit {
     });
   }
 
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Your changes have been saved.',
+      duration: 2000
+    });
+    toast.present();
+  }
 }

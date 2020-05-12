@@ -29,9 +29,8 @@ export class RegisterModalPage implements OnInit {
 
   ngOnInit() {
     this.store.get('session').then(sess => {
-      this.leagueServ.GetUserType(sess).subscribe(data => {
-        this.UserTypes = data.UserTypes;
-        this.store.set('session', data.Session);
+      this.leagueServ.GetUnsecureUserType().subscribe(data => {
+        this.UserTypes = data;
       });
     });
   }
@@ -42,8 +41,10 @@ export class RegisterModalPage implements OnInit {
     this.returnType.subscribe(data => {
       if (data.Error === null) {
         this.store.set('session', data);
-        this.modalCtrl.dismiss({
-          dismissed: true
+        this.presentToast().then(() => {
+          this.modalCtrl.dismiss({
+            dismissed: true
+          });
         });
       } else {
         this.error = data.Error;
@@ -55,5 +56,13 @@ export class RegisterModalPage implements OnInit {
     this.modalCtrl.dismiss({
       dismissed: true
     });
+  }
+
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Successfully Registered!',
+      duration: 2000
+    });
+    toast.present();
   }
 }

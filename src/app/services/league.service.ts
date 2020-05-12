@@ -94,7 +94,7 @@ export class LeagueService {
   getPlayers(sess) {
     this.path = 'api/League/GetPlayers';
     console.log(sess);
-    return this.http.post<SecurePlayers>(this.server + this.path, sess, this.httpOptions );
+    return this.http.post<SecurePlayers>(this.server + this.path, sess, this.httpOptions);
   }
 
   getTeams(sess) {
@@ -160,7 +160,7 @@ export class LeagueService {
   }
 
   AddLeague(league, session) {
-    this.path = 'api/League/AddTeam';
+    this.path = 'api/League/AddLeague';
     const inLeague: SecureLeague = {
       League: league,
       Session: session
@@ -182,6 +182,11 @@ export class LeagueService {
   GetUserType(sess) {
     this.path = 'api/League/GetUserTypes';
     return this.http.post<SecureUserTypes>(this.server + this.path, sess, this.httpOptions);
+  }
+
+  GetUnsecureUserType() {
+    this.path = 'api/Auth/GetUserTypes';
+    return this.http.get<UserType[]>(this.server + this.path);
   }
 
   AddUserType(usertype, session) {

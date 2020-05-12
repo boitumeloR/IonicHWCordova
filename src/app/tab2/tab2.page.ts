@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SecurePlayers, Players, LeagueService, SecureTeams, Team } from '../services/league.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UpdateTeamModalPage } from '../modals/update-team-modal/update-team-modal.page';
 import { AddTeamModalPage } from '../modals/add-team-modal/add-team-modal.page';
@@ -16,7 +16,8 @@ export class Tab2Page implements OnInit {
   teams: Observable<SecureTeams>;
   tableData: Team[];
 
-  constructor(private router: Router, private store: Storage, private serv: LeagueService, private modalController: ModalController) {}
+  constructor(private router: Router, private store: Storage, private serv: LeagueService,
+              private modalController: ModalController, private toastCtrl: ToastController) {}
 
   ngOnInit(): void {
     this.store.get('session').then(sess => {
@@ -63,5 +64,6 @@ export class Tab2Page implements OnInit {
        });
     });
   }
+
 
 }

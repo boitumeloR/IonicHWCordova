@@ -35,6 +35,10 @@ export class Tab4Page implements OnInit {
       component: UpdateUserTypeModalPage,
       componentProps: league
     });
+
+    modal.onDidDismiss().then(() => {
+      this.reActivate();
+    });
     return await modal.present();
   }
 

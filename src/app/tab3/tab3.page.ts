@@ -36,6 +36,10 @@ export class Tab3Page implements OnInit {
       component: UpdateLeagueModalPage,
       componentProps: league
     });
+
+    modal.onDidDismiss().then(() => {
+      this.reActivate();
+    });
     return await modal.present();
   }
 

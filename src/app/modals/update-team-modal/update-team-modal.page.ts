@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SecureTeam, SecureLeagues, League, Team, LeagueService } from 'src/app/services/league.service';
 import { Observable } from 'rxjs';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, ToastController } from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import { Router } from '@angular/router';
 
@@ -23,7 +23,8 @@ export class UpdateTeamModalPage implements OnInit {
     LeagueID: 0
   };
   constructor(private modalCtrl: ModalController, private store: Storage,
-              private serv: LeagueService, private router: Router, private navParams: NavParams) { }
+              private serv: LeagueService, private router: Router, private navParams: NavParams,
+              private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.store.get('session').then(resp => {
@@ -46,8 +47,10 @@ export class UpdateTeamModalPage implements OnInit {
       this.serv.UpdateTeam(this.inTeam, resp).subscribe(data => {
         if (data.Error === null) {
           this.store.set('session', data);
-          this.modalCtrl.dismiss({
-            dismissed: true
+          this.presentToast().then(() => {
+            this.modalCtrl.dismiss({
+              dismissed: true
+            });
           });
         }
       });
@@ -58,5 +61,13 @@ export class UpdateTeamModalPage implements OnInit {
     this.modalCtrl.dismiss({
       dismissed: true
     });
+  }
+
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Your changes have been saved.',
+      duration: 2000
+    });
+    toast.present();
   }
 }

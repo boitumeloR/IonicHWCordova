@@ -6,6 +6,7 @@ import {Storage} from '@ionic/storage';
 import { ModalController } from '@ionic/angular';
 import {AddPlayerModalPage} from '../modals/add-player-modal/add-player-modal.page';
 import {UpdatePlayerModalPage} from '../modals/update-player-modal/update-player-modal.page';
+import {ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -16,11 +17,13 @@ export class Tab1Page implements OnInit {
 
   players: Observable<SecurePlayers>;
   tableData: Players[];
-  constructor(private router: Router, private store: Storage, private serv: LeagueService, private modalController: ModalController) {}
+  constructor(private router: Router, private store: Storage, private serv: LeagueService,
+              private modalController: ModalController, private toastCtrl: ToastController) {}
 
   ngOnInit() {
     this.store.get('session').then(sess => {
       console.log(sess);
+      console.log('Hello world');
       this.players = this.serv.getPlayers(sess);
       this.players.subscribe(data => {
         this.tableData = data.Players;
@@ -34,6 +37,9 @@ export class Tab1Page implements OnInit {
     const modal = await this.modalController.create({
       component: UpdatePlayerModalPage,
       componentProps: player
+    });
+    modal.onDidDismiss().then(() => {
+      this.reActivate();
     });
     return await modal.present();
   }
@@ -68,8 +74,18 @@ export class Tab1Page implements OnInit {
     this.store.get('session').then(sess => {
       this.serv.DeletePlayer(player, sess).subscribe(data => {
         this.store.set('session', data);
-        this.reActivate();
+        this.presentToast().then(() => {
+          this.reActivate();
+        });
       });
     });
+  }
+
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Successfully Deleted!',
+      duration: 2000
+    });
+    toast.present();
   }
 }

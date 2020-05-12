@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserType, LeagueService } from 'src/app/services/league.service';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import {Storage} from '@ionic/storage';
 
@@ -16,7 +16,8 @@ export class UpdateUserTypeModalPage implements OnInit {
     UserTypeDescription: ''
   };
   constructor(private modalCtrl: ModalController, private store: Storage,
-              private serv: LeagueService, private router: Router, private navParams: NavParams) { }
+              private serv: LeagueService, private router: Router, private navParams: NavParams,
+              private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.inUserType.UserTypeID = this.navParams.get('UserTypeID');
@@ -29,8 +30,10 @@ export class UpdateUserTypeModalPage implements OnInit {
       this.serv.UpdateUserType(this.inUserType, resp).subscribe(data => {
         if (data.Error === null) {
           this.store.set('session', data);
-          this.modalCtrl.dismiss({
-            dismissed: true
+          this.presentToast().then(() => {
+            this.modalCtrl.dismiss({
+              dismissed: true
+            });
           });
         }
       });
@@ -41,5 +44,13 @@ export class UpdateUserTypeModalPage implements OnInit {
     this.modalCtrl.dismiss({
       dismissed: true
     });
+  }
+
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Your changes have been saved.',
+      duration: 2000
+    });
+    toast.present();
   }
 }
